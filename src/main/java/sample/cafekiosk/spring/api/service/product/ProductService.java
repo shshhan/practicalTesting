@@ -28,9 +28,9 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     //동시성 이슈
-    //productNumber를 DB 유니크, 오류 발생 시 n회 재시도 등
+    //=> productNumber를 DB 유니크, 오류 발생 시 n회 재시도 등 (동시성 이슈 발생 가능성이 낮고 크리티컬하지 않을 경우)
     //동시접속이 많을 경우에는 productNumber를 UUID 등 유니크한 값을 활용
-    @Transactional
+    @Transactional  //CUD 작업에서는 메서드 단위에서 트랜잭션을 걸어주기
     public ProductResponse createProduct(ProductCreateRequest request) {
         String nextProductNumber = createNextProductNumber();
 
@@ -47,7 +47,7 @@ public class ProductService {
             return "001";
         }
 
-        int latestProductNumberInt = Integer.valueOf(latestProductNumber);
+        int latestProductNumberInt = Integer.parseInt(latestProductNumber);
         int nextProductNumberInt = latestProductNumberInt + 1;
 
         return String.format("%03d", nextProductNumberInt);
