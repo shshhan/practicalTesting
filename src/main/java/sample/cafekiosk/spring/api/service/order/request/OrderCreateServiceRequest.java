@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderCreateServiceRequest {
 
-한    private List<String> productNumbers;
+    private List<String> productNumbers;
 
     @Builder
     private OrderCreateServiceRequest(List<String> productNumbers) {
