@@ -23,6 +23,12 @@ public class MailService {
                 .content(content)
                 .build()
             );
+
+            //Mockito @Spy 테스트를 위한 행위
+            mailSendClient.a();
+            mailSendClient.b();
+            mailSendClient.c();
+
             return true;
         }
         return false;
