@@ -3,9 +3,9 @@ package sample.cafekiosk.spring.api.service.mail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sample.cafekiosk.spring.client.MailSendClient;
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistory;
@@ -17,10 +17,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class MailServiceTest {
 
-//    @Mock
-//    private MailSendClient mailSendClient;
-
-    @Spy    //객체의 일부만 Stubbing 하고 싶을 때 Mock 대신 사용
+    @Mock
+//    @Spy    //객체의 일부만 Stubbing 하고 싶을 때 Mock 대신 사용
     private MailSendClient mailSendClient;
 
     @Mock
@@ -34,14 +32,18 @@ class MailServiceTest {
     void sendMail() {
         //given
 
-        //stubbing by mock
-//        when(mailSendClient.sendEmail(anyString(),anyString(),anyString(),anyString()))
-//                .thenReturn(true);
+        //stubbing by BDDMockito
+        BDDMockito.given(mailSendClient.sendEmail(anyString(),anyString(),anyString(),anyString()))
+            .willReturn(true);
 
-        //stubbing by spy
-        doReturn(true)
-                .when(mailSendClient)
-                .sendEmail(anyString(), anyString(), anyString(), anyString());
+        //stubbing by Mockito.mock
+//        when(mailSendClient.sendEmail(anyString(),anyString(),anyString(),anyString()))
+//            .thenReturn(true);
+
+        //stubbing by Mockito.spy
+//        doReturn(true)
+//           .when(mailSendClient)
+//           .sendEmail(anyString(), anyString(), anyString(), anyString());
 
         //when
         boolean result = mailService.sendMail("", "", "", "");
